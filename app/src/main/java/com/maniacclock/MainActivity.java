@@ -8,8 +8,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ListView lista;
+
+    // di prova
+    private ArrayList<String> l;
+    private ArrayAdapter<String> ad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,11 +30,28 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // lista sveglie
+        lista = (ListView) findViewById(R.id.lista_sveglie);
+        l = new ArrayList<>();
+        l.add("uno");
+        l.add("due");
+        ad = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, l);
+        lista.setAdapter(ad);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        // selezione item lista
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Snackbar.make(view, "Item "+position+" selezionato", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

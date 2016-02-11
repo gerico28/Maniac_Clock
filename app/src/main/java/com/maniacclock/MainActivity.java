@@ -1,5 +1,6 @@
 package com.maniacclock;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -20,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
     private ListView lista;
 
     // di prova
-    private ArrayList<String> l;
+    private ArrayList<Sveglia> l;
     private ArrayAdapter<String> ad;
+    private ImageButton img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +35,15 @@ public class MainActivity extends AppCompatActivity {
 
         // lista sveglie
         lista = (ListView) findViewById(R.id.lista_sveglie);
-        l = new ArrayList<>();
-        l.add("uno");
-        l.add("due");
-        ad = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, l);
-        lista.setAdapter(ad);
+        l = new ArrayList<Sveglia>();
+        l.add(new Sveglia("18","00"));
+        l.add(new Sveglia("19","30"));
+        l.add(new Sveglia("00","30"));
+//        ad = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, l);
+//        lista.setAdapter(ad);
+        lista.setAdapter(new CellAdapter(getApplicationContext(), l));
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -47,14 +54,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // selezione item lista
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Snackbar.make(view, "Item "+position+" selezionato", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override

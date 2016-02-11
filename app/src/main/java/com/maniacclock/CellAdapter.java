@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +21,6 @@ public class CellAdapter extends BaseAdapter {
     private Context context;
     private static LayoutInflater inflater=null;
     private ArrayList<Sveglia> listaSveglie;
-    private ImageButton img;
 
     public CellAdapter(Context c, ArrayList<Sveglia> lista){
 
@@ -34,7 +34,7 @@ public class CellAdapter extends BaseAdapter {
         Sveglia sveglia;
         TextView ora;
         ImageButton stato;
-
+        Button del;
     }
 
     @Override
@@ -58,9 +58,22 @@ public class CellAdapter extends BaseAdapter {
         holder.sveglia = (Sveglia) listaSveglie.get(position);
         holder.ora = (TextView) rowView.findViewById(R.id.ora);
         holder.stato = (ImageButton) rowView.findViewById(R.id.stato);
+        holder.del = (Button) rowView.findViewById(R.id.deleteButton);
 
         holder.ora.setText(listaSveglie.get(position).getOra()+":"+listaSveglie.get(position).getMinuti());
 
+        // gestione tasto cancellazione
+        holder.del.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                listaSveglie.remove(position);
+                Snackbar.make(v, "Sveglia Cancellata", Snackbar.LENGTH_LONG)
+                        .setAction("Cancellazione", null).show();
+                notifyDataSetChanged();
+            }
+        });
+
+        // gestione bottone attivazione/disattivazione sveglia
         if(listaSveglie.get(position).getStato())
             holder.stato.setImageResource(R.drawable.clock_on);
         else
@@ -73,12 +86,12 @@ public class CellAdapter extends BaseAdapter {
                 if(holder.sveglia.getStato()) {
                     holder.stato.setImageResource(R.drawable.clock_on);
                     Snackbar.make(v, "Sveglia Attivata", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                            .setAction("Attivazione", null).show();
                 }
                 else {
                     holder.stato.setImageResource(R.drawable.clock);
                     Snackbar.make(v, "Sveglia Disattivata", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                            .setAction("Disattivazione", null).show();
                 }
             }
         });

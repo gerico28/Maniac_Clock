@@ -29,4 +29,16 @@
         android:layout_alignParentEnd="true"
         android:background="#00ffffff" />
 
+    <Button
+        android:paddingTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/deleteButton"
+        android:text="Cancella"
+        android:layout_alignBottom="@+id/ora"
+        android:layout_centerHorizontal="true"
+        android:background="#00ffffff"
+        android:clickable="true"
+        android:textColor="#f72828" />
+
 </RelativeLayout>
